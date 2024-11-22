@@ -1,0 +1,11 @@
+{
+  "name": "@borderless-passport-uploader/functions",
+  "version": "0.0.0",
+  "dependencies": {
+    "@borderless-passport-uploader/core": "workspace:*",
+    "sst": "3.3.27"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.137"
+  }
+}
