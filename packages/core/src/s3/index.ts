@@ -12,7 +12,7 @@ export const generateImageUploadUrl = async ({
 
   const command = new PutObjectCommand({
     Key: constructS3FileName({ userId, imageId }),
-    Bucket: Resource.MyBucket.name,
+    Bucket: Resource.Documents.name,
   });
   const uploadUrl = await getSignedUrl(new S3Client(), command, {
     expiresIn: 3600, // 1 hour in seconds
@@ -28,4 +28,9 @@ export const constructS3FileName = ({
   imageId: string;
 }) => {
   return `${userId}/${imageId}.jpeg`;
+};
+
+export const parseS3FileName = (fileName: string) => {
+  const [userId, imageId] = fileName.replace('.jpeg', '').split('/');
+  return { userId, imageId };
 };

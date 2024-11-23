@@ -1,0 +1,1 @@
+ALTER TABLE "images" RENAME COLUMN "exparation_date" TO "expiration_date";

@@ -10,9 +10,13 @@ declare module "sst" {
       "type": "sst.aws.ApiGatewayV2"
       "url": string
     }
-    "MyBucket": {
+    "Documents": {
       "name": string
       "type": "sst.aws.Bucket"
+    }
+    "NeonDbBorderlessPassportUploaderConnectionString": {
+      "type": "sst.sst.Secret"
+      "value": string
     }
   }
 }

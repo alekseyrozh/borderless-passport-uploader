@@ -4,7 +4,8 @@
   "dependencies": {
     "@borderless-passport-uploader/core": "workspace:*",
     "sst": "3.3.27",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.137"

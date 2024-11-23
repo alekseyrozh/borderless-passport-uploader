@@ -1,32 +1,35 @@
-import type { Handler } from 'aws-lambda';
-import { z } from 'zod';
+import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/core/auth';
+import {
+  getPassportImageDataFromDb,
+  getPassportInfoApiBodySchema,
+  GetPassportInfoApiResponse,
+} from '@borderless-passport-uploader/core/passport-parsing';
+import { getDb } from '@borderless-passport-uploader/core/postgress';
+import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 
-const getPassportInfoApiBodySchema = z.object({
-  userId: z.string(),
-  imageId: z.string(),
-});
+export const handler: APIGatewayProxyHandlerV2 = async event => {
+  const userId = extractUserFromAuthHeaders(event.headers);
+  if (!userId) {
+    return { statusCode: 401 };
+  }
 
-enum PassportProcessingStatus {
-  UPLOADED = 'UPLOADED',
-  PROCESSED = 'PROCESSED',
-  ERROR = 'ERROR',
-}
-
-const getPassportInfoApiResponseSchema = z.object({
-  imageId: z.string(),
-  processingStatus: z.nativeEnum(PassportProcessingStatus),
-});
-
-type GetPassportInfoApiResponse = z.infer<
-  typeof getPassportInfoApiResponseSchema
->;
-
-export const handler: Handler = async event => {
   const jsonBody = JSON.parse(event.body ?? '{}');
-  const { userId, imageId } = getPassportInfoApiBodySchema.parse(jsonBody);
+  const { imageId } = getPassportInfoApiBodySchema.parse(jsonBody);
+
+  const db = getDb();
+
+  const passportImageFromDb = await getPassportImageDataFromDb({
+    db,
+    imageId,
+    userId,
+  });
+
+  if (!passportImageFromDb) {
+    return { statusCode: 404 };
+  }
 
   return {
     imageId,
-    processingStatus: PassportProcessingStatus.PROCESSED,
+    processingStatus: passportImageFromDb.processingStatus,
   } satisfies GetPassportInfoApiResponse;
 };

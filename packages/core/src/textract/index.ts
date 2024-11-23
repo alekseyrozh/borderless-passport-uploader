@@ -11,7 +11,7 @@ export const textractIdentityDocument = async ({
     DocumentPages: [
       {
         S3Object: {
-          Bucket: Resource.MyBucket.name,
+          Bucket: Resource.Documents.name,
           Name: s3FileName,
         },
       },
