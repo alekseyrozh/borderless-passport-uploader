@@ -9,7 +9,7 @@ documentApi.route('POST /generate-passport-upload-url', {
 });
 
 documentApi.route('GET /passport-info', {
-  handler: 'packages/lambdas/src/get-passport-info.handler',
+  handler: 'packages/functions/src/get-passport-info.handler',
   link: [
     documentsBucket,
     secrets.NeonDbBorderlessPassportUploaderConnectionString,

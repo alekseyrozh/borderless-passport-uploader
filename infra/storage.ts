@@ -1,1 +1,23 @@
+import { secrets } from './secrets';
+
 export const documentsBucket = new sst.aws.Bucket('Documents');
+
+documentsBucket.subscribe(
+  {
+    handler: 'packages/lambdas/src/process-passport-image.handler',
+    name: 'ProcessPassportImage',
+    link: [
+      documentsBucket,
+      secrets.NeonDbBorderlessPassportUploaderConnectionString,
+    ],
+    permissions: [
+      {
+        actions: ['textract:*'],
+        resources: ['*'],
+      },
+    ],
+  },
+  {
+    events: ['s3:ObjectCreated:*'],
+  },
+);

@@ -14,9 +14,9 @@ export default $config({
     };
   },
   async run() {
+    await import('./infra/web');
     await import('./infra/secrets');
     await import('./infra/storage');
-    await import('./infra/passport-processing');
     const { documentApi } = await import('./infra/api');
 
     return {
