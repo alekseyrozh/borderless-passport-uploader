@@ -57,7 +57,7 @@ export const handler: S3Handler = async event => {
           throw new Error(`Expected 1 field but got ${field.length}`);
         }
       });
-      const confidenceAcceptanceThreshold = 0.8;
+      const confidenceAcceptanceThreshold = 0.5;
       allFields.find(field => {
         if (
           !field[0].ValueDetection?.Confidence ||
