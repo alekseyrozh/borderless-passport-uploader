@@ -3,17 +3,22 @@
 export default $config({
   app(input) {
     return {
-      name: "borderless-passport-uploader",
-      removal: input?.stage === "production" ? "retain" : "remove",
-      home: "aws",
+      name: 'borderless-passport-uploader',
+      removal: input?.stage === 'production' ? 'retain' : 'remove',
+      home: 'aws',
+      providers: {
+        aws: {
+          region: 'eu-west-1',
+        },
+      },
     };
   },
   async run() {
-    await import("./infra/storage");
-    const api = await import("./infra/api");
+    await import('./infra/storage');
+    const { documentApi } = await import('./infra/api');
 
     return {
-      api: api.myApi.url,
+      api: documentApi.url,
     };
   },
 });
