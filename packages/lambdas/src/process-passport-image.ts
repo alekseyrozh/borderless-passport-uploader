@@ -4,10 +4,10 @@ import {
   markPassportImageAsProcessedInDb,
   PassportProcessingStatus,
   savePassportImageToDb,
-} from '@borderless-passport-uploader/core/passport-parsing';
-import { getDb } from '@borderless-passport-uploader/core/postgress';
-import { parseS3FileName } from '@borderless-passport-uploader/core/s3';
-import { textractIdentityDocument } from '@borderless-passport-uploader/core/textract';
+} from '@borderless-passport-uploader/libs/passport-parsing';
+import { getDb } from '@borderless-passport-uploader/libs/postgress';
+import { parseS3FileName } from '@borderless-passport-uploader/libs/s3';
+import { textractIdentityDocument } from '@borderless-passport-uploader/libs/textract';
 import type { S3Handler } from 'aws-lambda';
 
 export const handler: S3Handler = async event => {

@@ -19,7 +19,26 @@ importers:
         specifier: 5.6.2
         version: 5.6.2
 
-  packages/core:
+  packages/lambdas:
+    dependencies:
+      '@borderless-passport-uploader/libs':
+        specifier: workspace:*
+        version: link:../libs
+      sst:
+        specifier: 3.3.27
+        version: 3.3.27
+      uuid:
+        specifier: ^11.0.3
+        version: 11.0.3
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@types/aws-lambda':
+        specifier: ^8.10.137
+        version: 8.10.145
+
+  packages/libs:
     dependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.699.0
@@ -52,25 +71,6 @@ importers:
       vitest:
         specifier: ^2.0.3
         version: 2.1.5(@types/node@20.17.6)
-
-  packages/functions:
-    dependencies:
-      '@borderless-passport-uploader/core':
-        specifier: workspace:*
-        version: link:../core
-      sst:
-        specifier: 3.3.27
-        version: 3.3.27
-      uuid:
-        specifier: ^11.0.3
-        version: 11.0.3
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@types/aws-lambda':
-        specifier: ^8.10.137
-        version: 8.10.145
 
 packages:
 

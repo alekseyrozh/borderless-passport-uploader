@@ -1,6 +1,6 @@
-import { GeneratePassportUploadUrlApiResponse } from '@borderless-passport-uploader/core/passport-parsing';
-import { generateImageUploadUrl } from '@borderless-passport-uploader/core/s3';
-import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/core/auth';
+import { GeneratePassportUploadUrlApiResponse } from '@borderless-passport-uploader/libs/passport-parsing';
+import { generateImageUploadUrl } from '@borderless-passport-uploader/libs/s3';
+import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth';
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 
 export const handler: APIGatewayProxyHandlerV2 = async event => {

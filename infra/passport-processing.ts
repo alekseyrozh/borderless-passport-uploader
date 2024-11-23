@@ -3,7 +3,7 @@ import { documentsBucket } from './storage';
 
 documentsBucket.subscribe(
   {
-    handler: 'packages/functions/src/process-passport-image.handler',
+    handler: 'packages/lambdas/src/process-passport-image.handler',
     name: 'ProcessPassportImage',
     link: [
       documentsBucket,

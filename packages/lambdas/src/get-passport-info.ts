@@ -1,10 +1,10 @@
-import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/core/auth';
+import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth';
 import {
   getPassportImageDataFromDb,
   getPassportInfoApiBodySchema,
   GetPassportInfoApiResponse,
-} from '@borderless-passport-uploader/core/passport-parsing';
-import { getDb } from '@borderless-passport-uploader/core/postgress';
+} from '@borderless-passport-uploader/libs/passport-parsing';
+import { getDb } from '@borderless-passport-uploader/libs/postgress';
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 
 export const handler: APIGatewayProxyHandlerV2 = async event => {
