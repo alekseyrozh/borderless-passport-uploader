@@ -44,10 +44,13 @@ export default function Home() {
   };
   return (
     <div className="flex flex-col items-center my-20">
-      <h1 className="text-7xl font-normal mb-[100px] text-dark-brand font-[family-name:var(--font-playfair-display)] text-center text-balance">
+      <h1 className="text-7xl font-normal text-dark-brand font-[family-name:var(--font-playfair-display)] text-center text-balance">
         Borderless passport uploader
       </h1>
-      <div className="w-[600px] max-w-full px-5">
+      <p className="text-xl text-dark-brand mt-8">
+        Extract key dates from your documents with ease
+      </p>
+      <div className="w-[600px] max-w-full px-5 mt-12">
         <FileUpload />
       </div>
       {localFileUrl && (
