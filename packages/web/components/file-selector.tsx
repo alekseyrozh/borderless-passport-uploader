@@ -1,30 +1,25 @@
+import { SelectedFile } from '@/types/selected-file';
 import { ACCEPTED_IMAGE_MIME_TYPES } from '@borderless-passport-uploader/libs/passport-parsing/client';
 import { CloudUpload, Trash2 } from 'lucide-react';
 import prettyBytes from 'pretty-bytes';
-import { ReactNode, useEffect, useState } from 'react';
-import { ErrorCode, FileWithPath, useDropzone } from 'react-dropzone';
+import { useEffect } from 'react';
+import { ErrorCode, useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
-
-type FileWithPreview = {
-  previewUrl: string;
-  file: FileWithPath;
-};
 
 // 2mb
 const MAX_FILE_SIZE_BYTES = 1000 * 1000 * 2; // not *1024, huh? How come does prettyBytes use 1000 instead of 1024?
 
 // heavily inspired by https://preline.co/docs/file-upload.html
 export const FileSelector = ({
-  button,
   disabled,
+  onSelectedFilesChanged,
+  selectedFiles,
 }: {
-  button: (selectedFile: FileWithPath) => ReactNode;
   disabled: boolean;
+  onSelectedFilesChanged: (selectedFiles: SelectedFile[]) => void;
+  selectedFiles: SelectedFile[];
 }) => {
-  const [filesWithPreview, setFilesWithPreview] = useState<FileWithPreview[]>(
-    [],
-  );
   const {
     getRootProps,
     getInputProps,
@@ -39,7 +34,7 @@ export const FileSelector = ({
     multiple: false,
     maxSize: MAX_FILE_SIZE_BYTES,
     onDrop: acceptedFiles => {
-      setFilesWithPreview(
+      onSelectedFilesChanged(
         acceptedFiles.map(file => ({
           previewUrl: URL.createObjectURL(file),
           file,
@@ -52,33 +47,30 @@ export const FileSelector = ({
           toast.error(getErrorMessage(error.code));
         });
       });
-      console.log(rejectedFiles);
+      console.warn(rejectedFiles);
     },
   });
 
   const clearAll = () => {
-    setFilesWithPreview([]);
+    onSelectedFilesChanged([]);
   };
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount. taken from https://react-dropzone.js.org/#section-basic-example
     return () =>
-      filesWithPreview.forEach(file => URL.revokeObjectURL(file.previewUrl));
-  }, [filesWithPreview]);
+      selectedFiles.forEach(file => URL.revokeObjectURL(file.previewUrl));
+  }, [selectedFiles]);
 
   return (
     <>
-      {filesWithPreview.length > 0 && (
-        <>
-          <SelectedFilesPreview
-            onClearAll={clearAll}
-            filesWithPreview={filesWithPreview}
-            disabled={disabled}
-          />
-          {button(filesWithPreview[0].file)}
-        </>
+      {selectedFiles.length > 0 && (
+        <SelectedFilesPreview
+          onClearAll={clearAll}
+          selectedFiles={selectedFiles}
+          disabled={disabled}
+        />
       )}
-      {filesWithPreview.length < 1 && (
+      {selectedFiles.length < 1 && (
         <div {...getRootProps({ className: 'dropzone' })}>
           <input {...getInputProps()} />
           <DropzoneContent
@@ -130,34 +122,34 @@ const DropzoneContent = ({
 };
 
 const SelectedFilesPreview = ({
-  filesWithPreview,
+  selectedFiles,
   onClearAll,
   disabled,
 }: {
-  filesWithPreview: FileWithPreview[];
+  selectedFiles: SelectedFile[];
   onClearAll: () => void;
   disabled: boolean;
 }) => {
-  return filesWithPreview.map(fileWithPreview => (
-    <div key={fileWithPreview.file.path}>
+  return selectedFiles.map(selectedFile => (
+    <div key={selectedFile.file.path}>
       <div className="p-3 bg-white border border-solid border-gray-300 rounded-xl">
         <div className="mb-1 flex flex-row justify-between items-center">
           <span className="size-20 flex justify-center items-center border border-gray-200 text-gray-500 rounded-lg">
             <img
               className="h-full w-full object-cover rounded-lg"
-              src={fileWithPreview.previewUrl}
+              src={selectedFile.previewUrl}
               // Revoke data uri after image is loaded, taken from https://react-dropzone.js.org/#section-basic-example
               onLoad={() => {
-                URL.revokeObjectURL(fileWithPreview.previewUrl);
+                URL.revokeObjectURL(selectedFile.previewUrl);
               }}
             />
           </span>
           <div className="max-w-[80%] pl-4 pr-2 mr-auto">
             <p className="text-sm font-medium text-gray-800 text-ellipsis text-nowrap overflow-hidden">
-              <span>{fileWithPreview.file.name}</span>
+              <span>{selectedFile.file.name}</span>
             </p>
             <p className="text-xs text-gray-500">
-              {prettyBytes(fileWithPreview.file.size)}
+              {prettyBytes(selectedFile.file.size)}
             </p>
           </div>
           {!disabled && (

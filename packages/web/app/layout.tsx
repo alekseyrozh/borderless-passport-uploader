@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Toaster } from 'sonner';
 import './globals.css';
+import { Providers } from '@/components/providers';
 
 const playfairDisplay = localFont({
   src: './fonts/PlayfairDisplay.ttf',
@@ -27,9 +28,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${playfairDisplay.variable} ${geistMono.variable} antialiased`}>
-        <Header />
-        {children}
-        <Toaster richColors expand />
+        <Providers>
+          <Header />
+          {children}
+          <Toaster richColors expand />
+        </Providers>
       </body>
     </html>
   );

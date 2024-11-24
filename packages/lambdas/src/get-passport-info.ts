@@ -32,5 +32,20 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
   return {
     imageId,
     processingStatus: passportImageFromDb.processingStatus,
+    dateOfBirth: passportImageFromDb.dateOfBirth
+      ? dateToDateString(passportImageFromDb.dateOfBirth)
+      : null,
+    expirationDate: passportImageFromDb.expirationDate
+      ? dateToDateString(passportImageFromDb.expirationDate)
+      : null,
   } satisfies GetPassportInfoApiResponse;
+};
+
+const dateToDateString = (date: Date) => {
+  const dateStr = date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
+  return dateStr;
 };

@@ -5,6 +5,8 @@ import { ACCEPTED_IMAGE_MIME_TYPES, PassportProcessingStatus } from './domain';
 export const getPassportInfoApiResponseSchema = z.object({
   imageId: z.string(),
   processingStatus: z.nativeEnum(PassportProcessingStatus),
+  dateOfBirth: z.string().nullable(),
+  expirationDate: z.string().nullable(),
 });
 export type GetPassportInfoApiResponse = z.infer<
   typeof getPassportInfoApiResponseSchema

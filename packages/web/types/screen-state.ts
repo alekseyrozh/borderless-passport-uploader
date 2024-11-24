@@ -5,3 +5,10 @@ export enum ScreenState {
   IMAGE_PROCESSED = 'IMAGE_PROCESSED',
   ERROR = 'ERROR',
 }
+
+export const isLoadingState = (screenState: ScreenState) => {
+  return (
+    screenState === ScreenState.IMAGE_UPLOADING ||
+    screenState === ScreenState.IMAGE_PROCESSING
+  );
+};
