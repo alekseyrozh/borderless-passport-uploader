@@ -9,3 +9,5 @@ export const ALL_PASSPORT_PROCESSING_STATUSES = [
   PassportProcessingStatus.PROCESSED,
   PassportProcessingStatus.ERROR,
 ] as const;
+
+export const ACCEPTED_IMAGE_MIME_TYPES = ['image/jpeg', 'image/png'] as const;

@@ -5,7 +5,8 @@
     "dev": "AWS_PROFILE=alekseyrozh-personal sst dev",
     "deploy:prod": "AWS_PROFILE=alekseyrozh-personal sst deploy --stage prod",
     "secret:set": "AWS_PROFILE=alekseyrozh-personal npx sst secret set",
-    "secrets:list": "AWS_PROFILE=alekseyrozh-personal npx sst secret list"
+    "secrets:list": "AWS_PROFILE=alekseyrozh-personal npx sst secret list",
+    "unlock": "AWS_PROFILE=alekseyrozh-personal npx sst unlock"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

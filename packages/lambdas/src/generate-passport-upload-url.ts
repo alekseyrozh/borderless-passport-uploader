@@ -1,6 +1,9 @@
-import { GeneratePassportUploadUrlApiResponse } from '@borderless-passport-uploader/libs/passport-parsing';
-import { generateImageUploadUrl } from '@borderless-passport-uploader/libs/s3';
-import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth';
+import {
+  generatePassportUploadUrlApiBodySchema,
+  GeneratePassportUploadUrlApiResponse,
+} from '@borderless-passport-uploader/libs/passport-parsing/server';
+import { generateImageUploadUrl } from '@borderless-passport-uploader/libs/s3/server';
+import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth/server';
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 
 export const handler: APIGatewayProxyHandlerV2 = async event => {
@@ -9,7 +12,14 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
     return { statusCode: 401 };
   }
 
-  const { imageId, uploadUrl } = await generateImageUploadUrl({ userId });
+  const jsonBody = JSON.parse(event.body ?? '{}');
+  const { fileMimeType } =
+    generatePassportUploadUrlApiBodySchema.parse(jsonBody);
+
+  const { imageId, uploadUrl } = await generateImageUploadUrl({
+    userId,
+    fileMimeType,
+  });
 
   return {
     imageId,

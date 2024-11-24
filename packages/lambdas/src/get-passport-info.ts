@@ -1,10 +1,9 @@
-import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth';
+import { extractUserFromAuthHeaders } from '@borderless-passport-uploader/libs/auth/server';
 import {
   getPassportImageDataFromDb,
-  getPassportInfoApiBodySchema,
   GetPassportInfoApiResponse,
-} from '@borderless-passport-uploader/libs/passport-parsing';
-import { getDb } from '@borderless-passport-uploader/libs/postgress';
+} from '@borderless-passport-uploader/libs/passport-parsing/server';
+import { getDb } from '@borderless-passport-uploader/libs/postgress/server';
 import type { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 
 export const handler: APIGatewayProxyHandlerV2 = async event => {
@@ -13,8 +12,10 @@ export const handler: APIGatewayProxyHandlerV2 = async event => {
     return { statusCode: 401 };
   }
 
-  const jsonBody = JSON.parse(event.body ?? '{}');
-  const { imageId } = getPassportInfoApiBodySchema.parse(jsonBody);
+  const imageId = event.queryStringParameters?.imageId;
+  if (!imageId) {
+    return { statusCode: 400 };
+  }
 
   const db = getDb();
 

@@ -1,4 +1,4 @@
-import { Db, images, eq, and } from '../postgress';
+import { Db, images, eq, and } from '../postgress/server';
 import { PassportProcessingStatus } from './types/domain';
 
 export const savePassportImageToDb = async ({

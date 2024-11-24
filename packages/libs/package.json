@@ -8,9 +8,11 @@
     "db:studio": "AWS_PROFILE=alekseyrozh-personal sst shell drizzle-kit studio -- --config=./src/postgress/drizzle.config.ts"
   },
   "exports": {
-    "./*": [
-      "./src/*/index.ts",
-      "./src/*.ts"
+    "./*/client": [
+      "./src/*/client.ts"
+    ],
+    "./*/server": [
+      "./src/*/server.ts"
     ]
   },
   "dependencies": {
@@ -19,11 +21,13 @@
     "@aws-sdk/s3-request-presigner": "^3.699.0",
     "@neondatabase/serverless": "^0.10.3",
     "drizzle-orm": "^0.36.4",
+    "mime-types": "^2.1.35",
     "sst": "3.3.27",
     "uuid": "^11.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/mime-types": "^2.1.4",
     "drizzle-kit": "^0.28.1",
     "vitest": "^2.0.3"
   }

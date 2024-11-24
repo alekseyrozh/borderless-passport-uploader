@@ -4,10 +4,10 @@ import {
   markPassportImageAsProcessedInDb,
   PassportProcessingStatus,
   savePassportImageToDb,
-} from '@borderless-passport-uploader/libs/passport-parsing';
-import { getDb } from '@borderless-passport-uploader/libs/postgress';
-import { parseS3FileName } from '@borderless-passport-uploader/libs/s3';
-import { textractIdentityDocument } from '@borderless-passport-uploader/libs/textract';
+} from '@borderless-passport-uploader/libs/passport-parsing/server';
+import { getDb } from '@borderless-passport-uploader/libs/postgress/server';
+import { parseS3FileName } from '@borderless-passport-uploader/libs/s3/server';
+import { textractIdentityDocument } from '@borderless-passport-uploader/libs/textract/server';
 import type { S3Handler } from 'aws-lambda';
 
 export const handler: S3Handler = async event => {
@@ -64,7 +64,7 @@ export const handler: S3Handler = async event => {
           field[0].ValueDetection?.Confidence < confidenceAcceptanceThreshold
         ) {
           throw new Error(
-            `Confidence level is below threshold. Level: ${field[0].ValueDetection?.Confidence}. Threshold: ${confidenceAcceptanceThreshold}`,
+            `Confidence level is below threshold. Field: ${field[0].Type?.Text}. Value ${field[0].ValueDetection?.Text} .Level: ${field[0].ValueDetection?.Confidence}. Threshold: ${confidenceAcceptanceThreshold}`,
           );
         }
       });
