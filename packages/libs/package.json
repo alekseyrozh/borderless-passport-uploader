@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "test": "sst shell vitest",
-    "db:generate": "AWS_PROFILE=alekseyrozh-personal sst shell drizzle-kit generate -- --config=./src/postgress/drizzle.config.ts",
-    "db:migrate": "AWS_PROFILE=alekseyrozh-personal sst shell drizzle-kit migrate -- --config=./src/postgress/drizzle.config.ts",
-    "db:studio": "AWS_PROFILE=alekseyrozh-personal sst shell drizzle-kit studio -- --config=./src/postgress/drizzle.config.ts"
+    "db:generate": "AWS_PROFILE=borderless sst shell drizzle-kit generate -- --config=./src/postgress/drizzle.config.ts",
+    "db:migrate": "AWS_PROFILE=borderless sst shell drizzle-kit migrate -- --config=./src/postgress/drizzle.config.ts",
+    "db:studio": "AWS_PROFILE=borderless sst shell drizzle-kit studio -- --config=./src/postgress/drizzle.config.ts"
   },
   "exports": {
     "./*/client": [

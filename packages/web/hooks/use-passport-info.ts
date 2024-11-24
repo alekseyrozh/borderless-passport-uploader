@@ -30,12 +30,7 @@ export const usePassportInfo = ({
             Authorization: `Bearer ${await getToken()}`,
           },
         },
-      ).catch(error => {
-        if (isNotFoundError(error)) {
-          console.log('Passport info not found which is an expected state');
-        }
-        throw error;
-      }),
+      ),
     refetchInterval: query => (shouldPoll(query.state.data) ? 3000 : false),
     enabled,
   });

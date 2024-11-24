@@ -14,13 +14,14 @@ export default $config({
     };
   },
   async run() {
-    await import('./infra/web');
+    const { web } = await import('./infra/web');
     await import('./infra/secrets');
     await import('./infra/storage');
     const { documentApi } = await import('./infra/api');
 
     return {
       api: documentApi.url,
+      webUrl: web.url,
     };
   },
 });

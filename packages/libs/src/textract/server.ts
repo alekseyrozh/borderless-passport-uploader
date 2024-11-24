@@ -1,5 +1,10 @@
-import { AnalyzeIDCommand, TextractClient } from '@aws-sdk/client-textract';
+import {
+  AnalyzeIDCommand,
+  AnalyzeIDCommandOutput,
+  TextractClient,
+} from '@aws-sdk/client-textract';
 import { Resource } from 'sst/resource';
+import { getDateParser } from '../passport-parsing/date-parsers';
 
 export const textractIdentityDocument = async ({
   s3FileName,

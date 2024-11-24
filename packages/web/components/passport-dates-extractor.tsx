@@ -17,12 +17,14 @@ import { ActionButton } from './action-button';
 
 export const PassportDatesExtractor = () => {
   const [selectedImages, setSelectedImages] = useState<SelectedFile[]>([]);
-  const [imageId, setImageId] = useState<string>();
   const {
     mutateAsync: generatePassportUploadUrlAsync,
     isPending: generatingUploadUrl,
     reset: resetGeneratePassportUploadUrl,
+    data: generatedUploadUrlData,
   } = useGeneratePassportUploadUrl();
+  const imageId = generatedUploadUrlData?.imageId;
+
   const {
     mutateAsync: uploadPassportImageAsync,
     isSuccess: passportImageUploaded,
@@ -49,12 +51,10 @@ export const PassportDatesExtractor = () => {
       fileMimeType: file.type as AcceptedImageMimeType, // casting is ok because we constrain accepted mime types in the FileSelector component
     });
 
-    setImageId(imageId);
     await uploadPassportImageAsync({ file, uploadUrl });
   };
 
   const onSelectedFilesChanged = (files: SelectedFile[]) => {
-    setImageId(undefined);
     resetGeneratePassportUploadUrl();
     resetUploadPassportImage();
     setSelectedImages(files);
@@ -126,7 +126,7 @@ const SuccessElements = ({
 const ErrorElements = () => {
   return (
     <p className="text-red-500 font-[family-name:var(--font-geist-mono)] mt-2">
-      This didn't work. Please try again with a better image.
+      This didn&apos;t work. Please try again with a better image.
     </p>
   );
 };

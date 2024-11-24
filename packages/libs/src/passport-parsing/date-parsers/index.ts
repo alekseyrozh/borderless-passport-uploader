@@ -6,6 +6,7 @@ export const getDateParser = ({ mrzCode }: { mrzCode: string }) => {
   return CUSTOM_DATE_PARSERS[mrzPrefix] ?? defaultDateParser;
 };
 
+// use a custom date parser for British passports, determine if the passport is British by checking the MRZ prefix
 const BRITISH_PASSPORT_MRZ_PREFIX: string = 'P<GBR';
 
 const CUSTOM_DATE_PARSERS = {

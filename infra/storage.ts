@@ -5,7 +5,7 @@ export const documentsBucket = new sst.aws.Bucket('Documents');
 documentsBucket.subscribe(
   {
     handler: 'packages/lambdas/src/process-passport-image.handler',
-    name: 'ProcessPassportImage',
+    name: `${$app.name}-${$app.stage}-ProcessPassportImage`,
     link: [
       documentsBucket,
       secrets.NeonDbBorderlessPassportUploaderConnectionString,
